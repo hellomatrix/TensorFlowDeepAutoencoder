@@ -84,9 +84,9 @@ class AutoEncoder(object):
     with tf.name_scope("autoencoder_variables"):
       for i in xrange(self.__num_hidden_layers + 1):
         # Train weights
-        name_w = self._weights_str.format(i + 1)
+        name_w = self._weights_str.format(i + 1) # weight1,weight2...
         w_shape = (self.__shape[i], self.__shape[i + 1])
-        a = tf.mul(4.0, tf.sqrt(6.0 / (w_shape[0] + w_shape[1])))
+        a = tf.mul(4.0, tf.sqrt(6.0 / (w_shape[0] + w_shape[1]))) #init
         w_init = tf.random_uniform(w_shape, -1 * a, a)
         self[name_w] = tf.Variable(w_init,
                                    name=name_w,
@@ -99,7 +99,7 @@ class AutoEncoder(object):
 
         if i < self.__num_hidden_layers:
           # Hidden layer fixed weights (after pretraining before fine tuning)
-          self[name_w + "_fixed"] = tf.Variable(tf.identity(self[name_w]),
+          self[name_w + "_fixed"] = tf.Variable(tf.identity(self[name_w]), #identity ?
                                                 name=name_w + "_fixed",
                                                 trainable=False)
 
